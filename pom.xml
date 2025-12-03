@@ -16,6 +16,26 @@
     <properties>
         <java.version>21</java.version>
     </properties>
+
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.ai</groupId>
+                <artifactId>spring-ai-bom</artifactId>
+                <version>1.0.0</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud.ai</groupId>
+                <artifactId>spring-ai-alibaba-bom</artifactId>
+                <version>1.0.0.2</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -57,23 +77,29 @@
         </dependency>
 
         <!-- 阿里Spring AI 对接框架 -->
-<!--        <dependency>-->
-<!--            <groupId>com.alibaba.cloud.ai</groupId>-->
-<!--            <artifactId>spring-ai-alibaba-agent-framework</artifactId>-->
-<!--            <version>1.1.0.0-M5</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>com.alibaba.cloud.ai</groupId>
             <artifactId>spring-ai-alibaba-agent-framework</artifactId>
-            <version>1.1.0.0-M4</version>
-<!--            <type>pom</type>-->
+            <version>1.1.0.0-M5</version>
         </dependency>
 
         <dependency>
             <groupId>com.alibaba.cloud.ai</groupId>
             <artifactId>spring-ai-alibaba-starter-dashscope</artifactId>
-            <version>1.1.0.0-M4</version>
+            <version>1.1.0.0-M5</version>
         </dependency>
+
+        <!-- markdown 文档读取器 -->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-markdown-document-reader</artifactId>
+        </dependency>
+        <!-- 问答拦截器引入 -->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-advisors-vector-store</artifactId>
+        </dependency>
+
 
         <!-- langchain4j -->
         <dependency>
@@ -114,17 +140,12 @@
             <version>5.8.37</version>
         </dependency>
 
-        <!-- markdown 文档读取器 -->
-        <dependency>
-            <groupId>org.springframework.ai</groupId>
-            <artifactId>spring-ai-markdown-document-reader</artifactId>
-            <version>1.0.0-M6</version>
-        </dependency>
-        <!-- 问答拦截器引入 -->
+
 
 
 
     </dependencies>
+
 
     <build>
         <plugins>

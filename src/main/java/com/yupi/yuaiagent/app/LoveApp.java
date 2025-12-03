@@ -7,8 +7,9 @@ import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
-import org.springframework.ai.chat.client.advisor.QuestionAnswerAdvisor;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
+import org.springframework.ai.chat.client.advisor.api.Advisor;
+import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.memory.InMemoryChatMemoryRepository;
 import org.springframework.ai.chat.memory.MessageWindowChatMemory;
@@ -55,9 +56,9 @@ public class LoveApp {
         chatClient = ChatClient.builder(dashscopeChatModel)
                 .defaultSystem(SYSTEM_PROMPT)
                 .defaultAdvisors(
-                        MessageChatMemoryAdvisor.builder(memory).build()
-//                        new MyLoggerAdvisor()
-//                        new MyReReadingAdvisor()
+                        MessageChatMemoryAdvisor.builder(memory).build(),
+                        new MyLoggerAdvisor(),
+                        new MyReReadingAdvisor()
                 )
                 .build();
 
@@ -130,6 +131,27 @@ public class LoveApp {
                 )
                 .advisors(new MyLoggerAdvisor())
                 .advisors(new QuestionAnswerAdvisor(loveAppVectorStore))
+                .call()
+                .chatResponse();
+        String res = chatResponse.getResult().getOutput().getText();
+        log.info("chatId: {}, message: {}", chatId, res);
+        return res;
+
+    }
+
+    @Resource
+    private Advisor loveAppRagCloudAdvisor;
+
+    public String doChatWithRagCloud(String message, String chatId) {
+
+        ChatResponse chatResponse = chatClient
+                .prompt()
+                .user(message)
+                .advisors(  // 配置顾问参数
+                        advisor -> advisor.param(ChatMemory.CONVERSATION_ID, chatId)  // 设置会话ID
+                )
+                .advisors(new MyLoggerAdvisor())
+                .advisors(loveAppRagCloudAdvisor)
                 .call()
                 .chatResponse();
         String res = chatResponse.getResult().getOutput().getText();

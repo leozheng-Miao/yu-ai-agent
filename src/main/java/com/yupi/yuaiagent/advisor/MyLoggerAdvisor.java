@@ -1,22 +1,12 @@
 package com.yupi.yuaiagent.advisor;
 
-import java.util.function.Function;
-
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.ai.chat.client.advisor.api.*;
 import reactor.core.publisher.Flux;
 
 import org.springframework.ai.chat.client.ChatClientMessageAggregator;
 import org.springframework.ai.chat.client.ChatClientRequest;
 import org.springframework.ai.chat.client.ChatClientResponse;
-import org.springframework.ai.chat.client.advisor.api.CallAdvisor;
-import org.springframework.ai.chat.client.advisor.api.CallAdvisorChain;
-import org.springframework.ai.chat.client.advisor.api.StreamAdvisor;
-import org.springframework.ai.chat.client.advisor.api.StreamAdvisorChain;
-import org.springframework.ai.chat.model.ChatResponse;
-import org.springframework.ai.model.ModelOptionsUtils;
-import org.springframework.lang.Nullable;
 
 /**
  * 自定义日志 Advisor
@@ -63,5 +53,4 @@ public class MyLoggerAdvisor implements CallAdvisor, StreamAdvisor {
 
         return new ChatClientMessageAggregator().aggregateChatClientResponse(chatClientResponses, this::observeAfter);
     }
-
 }

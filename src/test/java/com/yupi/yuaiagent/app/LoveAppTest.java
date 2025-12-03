@@ -56,9 +56,18 @@ class LoveAppTest {
 
         String chatId = UUID.randomUUID().toString();
         // 1
-        String message = "你好, 我是leo, 我已经结婚了。我现在的婚恋生活不和谐，我该怎么做？";
+        String message = "你好, 我是leo, 恋爱中如何有效处理双方的争吵？";
         String res = loveApp.doChatWithRagLocal(message, chatId);
         Assertions.assertNotNull(res);
     }
 
+    @Test
+    void doChatWithRagCloud() {
+
+        String chatId = UUID.randomUUID().toString();
+        // 1
+        String message = "你好, 我是leo, 恋爱中如何有效处理双方的争吵？";
+        String res = loveApp.doChatWithRagCloud(message, chatId);
+        Assertions.assertNotNull(res);
+    }
 }
